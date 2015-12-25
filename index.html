@@ -1,0 +1,51 @@
+{{define "index"}}
+<!doctype html>
+<html lang="en">
+  <body>
+    <style>
+    body{
+      font: normal x-small verdana,arial,helvetica,sans-serif;
+      font-size: 1em;
+      line-height: 1.4285714285714286em;
+      color:#222222;
+    }
+    </style>
+    <div>
+      Welcome to Eta, the backpage of the internet.
+    </div>
+    Create Comment
+    <form action="/r/eta/comments" method="post">
+      Post ID <input name="post_id" type="text"></input>
+      Parent ID <input name="parent_id" value="abc" type="text"></input>
+      Comment <input name="comment" type="text"></input>
+      Username <input name="username" value="drew" type="text"></input>
+      API Token <input name="api_token" value="abc" type="text"></input>
+      <input type="submit">
+    </form>
+    <hr>
+    Create Post
+    <form action="/r/eta" method="post">
+      Sub Name <input name="sub_name" value="eta" type="text"></input>
+      Title <input name="title" value="abc" type="text"></input>
+      Comment <input name="comment" type="text"></input>
+      Link <input name="link" type="text"></input>
+      <input type="submit">
+    </form>
+    <hr>
+    Create Sub
+    <form action="/r" method="post">
+      Name <input name="sub_name" value="eta" type="text"></input>
+      <input type="submit">
+    </form>
+    <hr>
+    Subs
+    <div>
+      {{ range .Subs }}
+        <div>
+          <a href="/r/{{ .Name }}">{{ .Name }}</a>
+        </div>
+      {{ end }}
+    </div>
+  </body>
+</html>
+{{end}}

@@ -1,0 +1,4 @@
+2015/12/22 22:19:21 Starting server...
+2015/12/22 22:19:23 Post count 3
+2015/12/22 22:19:23 template: sub.html:32:19: executing "sub" at <.Link>: Link has arguments but cannot be invoked as function
+exit status 1

@@ -1,0 +1,50 @@
+{{define "sub"}}
+<!doctype html>
+<html lang="en">
+  <body>
+    <style>
+    body{
+      font: normal x-small verdana,arial,helvetica,sans-serif;
+      font-size: 1em;
+      line-height: 1.4285714285714286em;
+      color:#222222;
+    }
+    .post{
+      background-color: #eee;
+      margin-bottom: 10px;
+    }
+    </style>
+
+    Welcome to <a href="/r/{{ .Sub }}">/r/{{ .Sub }}</a>
+    <div>
+      Create Post
+      <form action="/r/eta" method="post">
+        <input hidden name="sub_name" value="{{ .Sub }}" type="text"></input>
+        Title <input name="title" value="abc" type="text"></input>
+        Comment <input name="comment" type="text"></input>
+        Link <input name="link" type="text"></input>
+        <input type="submit">
+      </form>
+    </div>
+
+    {{ range .Posts }}
+      <div class="post">
+        <div style="margin-right:10px;">
+        {{ .Upvotes }}
+        </div>
+        <div>
+        {{ if not (eq .Link "") }}
+          <a target="_blank" href="{{ .Link }}">{{ .Title }}</a>
+        {{ else }}
+          <a href="/r/{{ $.Sub }}/comments/{{ .ID }}">{{ .Title }}</a>
+        {{ end }}
+        </div>
+        <div>
+          <a href="/r/{{ $.Sub }}/comments/{{ .ID }}">{{ .CommentCount }} comments</a>
+        </div>
+      </div>
+    {{ end }}
+
+  </body>
+</html>
+{{end}}

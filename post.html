@@ -1,0 +1,81 @@
+{{define "post"}}
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ template "jquery" }}
+  </head>
+  <body>
+    <style>
+    body{
+      font: normal x-small verdana,arial,helvetica,sans-serif;
+      font-size: 1em;
+      line-height: 1.4285714285714286em;
+      color: #222222;
+    }
+    #comments{
+      background-color: #eee;
+    }
+    .reply{
+      color:blue;
+      font-size: 0.8em;
+    }
+    .reply:hover{
+      cursor: pointer;
+      /*cursor: grab;*/
+    }
+    </style>
+
+    {{ if not .LinkIsNil }}
+      <a target="_blank" href="{{ .Post.Link }}">{{ .Post.Title }}</a>
+    {{ else }}
+      <a href="/r/{{ $.SubName }}/comments/{{ .Post.ID }}">{{ .Post.Title }}</a>
+    {{ end }}
+
+    <div style="margin-bottom:20px;">
+      <div>{{ .Post.Comment }}</div>
+      <div>
+        Posted to <a href="/r/{{.SubName}}">/r/{{.SubName}}</a> at {{ .Post.CreatedAt }}
+      </div>
+    </div>
+
+    <form id="comment_form" action="/r/{{ .Post.Sub }}/comments" method="post">
+      <input id="post_id" hidden name="post_id" value="{{ .Post.ID }}"/>
+      <input id="parent_id" hidden name="parent_id" value="{{ .Post.ID }}"/>
+      Comment <textarea id="comment" name="comment" type="text"></textarea>
+      <input hidden name="username" value="drew" type="text"></input>
+      <input hidden name="api_token" value="abc" type="text"></input>
+      <input type="submit">
+    </form>
+    <div>
+      {{ .CommentCount }} comments
+    </div>
+    <div id="comments" >
+      {{ .CommentHTML }}
+    </div>
+    <script>
+    $(".reply").click(function(){
+      var id = $(this).parent().parent().attr("id");
+      $("#parent_id").attr("value", id);
+      $(this).parent().append($("#comment_form"));
+    });
+    </script>
+    <script>
+      $("#comment_form").submit(function(){
+        // var post_id = $("#post_id");
+        // var parent_id = $("#parent_id");
+        // var comment = $("#comment");
+        var form = $('#comment_form').serialize();
+        $.ajax({
+    			url: '/r/{{ .Post.Sub }}/comments',
+    			  type: 'post',
+    			  data: form,
+    			  success: function(data) {
+    			  	alert("Comment successful!");
+    			  }
+    		});
+        return false;
+      });
+    </script>
+  </body>
+</html>
+{{end}}

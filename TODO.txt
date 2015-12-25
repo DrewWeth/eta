@@ -1,0 +1,12 @@
+Create User endpoint
+
+Upvote endpoint
+Downvote endpoint
+
+Sessions
+
+Create template for displaying comments
+Create post
+
+Show sub reddit
+Calculate subreddit rankings
